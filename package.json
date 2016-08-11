@@ -1,0 +1,33 @@
+{
+  "name": "cv",
+  "version": "1.0.0",
+  "description": "Interactive, searchable CV",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjgreaves/cv.git"
+  },
+  "dependencies": {
+		"express": "3.4.0",
+		"passport": "0.1.17",
+		"mongoose": "3.6.19",
+		"passport-google-oauth": "0.1.5"
+	},
+  "keywords": [
+    "CV",
+    "yellowmouse",
+    "reuben",
+    "greaves",
+    "passport",
+    "oauth"
+  ],
+  "author": "Reuben Greaves",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rjgreaves/cv/issues"
+  },
+  "homepage": "https://github.com/rjgreaves/cv#readme"
+}
