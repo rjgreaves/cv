@@ -4,6 +4,7 @@ var express = require('express')
     ,AuthHandler = require('./handlers/AuthHandler')
     ,passport = require('passport')
     ,mongoose = require('mongoose')
+    ,UserDB = require('./models/user')
     ;
 
 var app = express();
@@ -55,15 +56,27 @@ passport.use(new google_strategy({
   },
   function(accessToken, refreshToken, profile, done) {
     UserDB.findOne({email: profile._json.email},function(err,usr) {
-        usr.token = accessToken;    
-        usr.save(function(err,usr,num) {
-            if(err) {
-                console.log('error saving token');
-            }
-        });
-        process.nextTick(function() {
-            return done(null,profile);
-        });
+			if(err){
+				return next(err);
+			}
+			if(usr === null){
+                console.log(profile);
+                console.log(profile._json.email);
+                usr = new UserDB();
+                usr.email = profile._json.email;
+                usr.last_name = profile._json.family_name;
+                usr.first_name = profile._json.given_name;
+			}
+            usr.token = accessToken;    
+            usr.save(function(err,usr,num) {
+                if(err) {
+                    console.log(err);
+                    console.log('error saving token');
+                }
+            });
+            process.nextTick(function() {
+                return done(null,profile);
+            });
     });
   }
 ));

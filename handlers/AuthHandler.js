@@ -28,9 +28,19 @@ function googleSignInCallback(req, res, next) {
 			return res.redirect('http://localhost:8000');
 		}
 		UserDB.findOne({email: user._json.email},function(err,usr) {
-			res.writeHead(302, {
-				'Location': 'http://localhost:8000/#/index?token=' + usr.token + '&user=' + usr.email
-			});
+			if(err){
+				console.log("User not found1");
+				console.log(err);
+				return next(err);
+			}
+			if(usr === null){
+				console.log("User not found2");
+			}
+			else{
+				res.writeHead(302, {
+					'Location': 'http://localhost:8000/#/index?token=' + usr.token + '&user=' + usr.email
+				});
+			}
 			res.end();
 		});
 	})(req,res,next);
